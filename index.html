@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<script>
+  document.addEventListener("click", function () {
+    document.body.requestPointerLock();
+});
+</script>
+
+<script>
+
+window.addEventListener("load", function() {
+  // code to execute on page load
+  document.body.style.overflow = "hidden";
+});
+
+</script>
+
+<script>
+let running = true;
+let intervalId;
+
+intervalId = setInterval(function() {
+  if (running) {
+    time++;
+    timer.innerHTML = time;
+  }
+}, 1000);
+
+function stop() {
+  running = false;
+  clearTriangles();
+}
+
+function start() {
+  running = true;
+}
+
+function restart() {
+  stop();
+  start();
+}
+
+</script>
+
+<script>
+{
+
+var timer;
+
+</script>
+
+<script>
+document.addEventListener("wheel", function(event) {
+  event.preventDefault();
+});
+  }
+
+</script>
+
+<html>
+  <head><link rel="icon" type="image/png" href="/favicon.png">
+    <style>
+      selector { cursor: none; }
+
+      ::-webkit-scrollbar {
+    width: 0;
+    background-color: #F5F5F5;
+}
+
+    body {
+      overflow-y: scroll;
+      cursor: none;
+      background-color: black;
+    }
+    #timer {
+      position: absolute;
+      font-size: 100px;
+      top: 0;
+      left: 100;
+      color: white;
+    }
+    #cursor-square {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: blue;
+    }
+    #falling-triangles {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+    }
+    .triangle {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-left: 50px solid transparent;
+      border-right: 50px solid transparent;
+      border-bottom: 100px solid red;
+    }
+  </style>
+    
+    <script>
+{
+function clearTriangles() {
+  let triangles = document.getElementsByClassName("triangle");
+  while(triangles.length > 0) {
+    triangles[0].remove();
+  }
+}
+}
+
+    function checkCollision() {
+    let square = document.getElementById("cursor-square");
+    let squareRect = square.getBoundingClientRect();
+    let triangles = document.getElementsByClassName("triangle");
+    for (let i = 0; i < triangles.length; i++) {
+        let triangle = triangles[i];
+        let triangleRect = triangle.getBoundingClientRect();
+        if (
+            squareRect.x < triangleRect.x + triangleRect.width &&
+            squareRect.x + squareRect.width > triangleRect.x &&
+            squareRect.y < triangleRect.y + triangleRect.height &&
+            squareRect.height + squareRect.y > triangleRect.y
+        ) {
+            // collision detected
+            // reset timer here
+            time = 0;
+            timer.innerHTML = time;
+            restart()
+        }
+    }
+}
+
+</script>
+    
+  </head>
+  <body>
+    <div id="timer"></div>
+    <div id="cursor-square"></div>
+    <div id="falling-triangles"></div>
+    <script>
+   
+    let timer = document.getElementById("timer");
+    let cursorSquare = document.getElementById("cursor-square");
+    let fallingTriangles = document.getElementById("falling-triangles");
+    let time = 0;
+{
+    /// Get the cursorSquare element
+const cursorSquare = document.getElementById("cursor-square");
+
+// Get the movement data from the cursor lock API
+let movementX = null;
+let movementY = null;
+
+document.addEventListener("mousemove", (event) => {
+    movementX = event.movementX;
+    movementY = event.movementY;
+});
+
+// Update the position of the cursorSquare based on the movement data
+function updateCursorSquare() {
+  if(movementX !== null && movementY !== null){
+    let newLeft = cursorSquare.offsetLeft + movementX;
+    let newTop = cursorSquare.offsetTop + movementY;
+
+    // check if the new position is outside the screen
+    if (newLeft < 0) {
+      newLeft = 0;
+    } else if (newLeft + cursorSquare.offsetWidth > window.innerWidth) {
+      newLeft = window.innerWidth - cursorSquare.offsetWidth;
+    }
+
+    if (newTop < 0) {
+      newTop = 0;
+    } else if (newTop + cursorSquare.offsetHeight > window.innerHeight) {
+      newTop = window.innerHeight - cursorSquare.offsetHeight;
+    }
+
+    // update the position
+    cursorSquare.style.left = newLeft + "px";
+    cursorSquare.style.top = newTop + "px";
+    movementX = null;
+    movementY = null;
+  }
+}
+
+    }
+
+
+// Start updating the cursorSquare's position
+updateCursorSquare();
+
+
+document.addEventListener("mousemove", (event) => {
+    movementX = event.movementX;
+    movementY = event.movementY;
+});
+setInterval(updateCursorSquare, 10);
+
+    setInterval(checkCollision, 10);
+
+setInterval(function() {
+  let triangles = document.getElementsByClassName("triangle");
+  for (let i = 0; i < triangles.length; i++) {
+    let triangle = triangles[i];
+    triangle.style.top = triangle.offsetTop + 1 + "px";
+
+    // Check if the triangle is no longer visible
+    if (triangle.offsetTop > window.innerHeight) {
+      triangle.remove();
+    }
+  }
+}, 10);
+
+if (running) {
+    setInterval(function() {
+      let triangle = document.createElement("div");
+      triangle.classList.add("triangle");
+      triangle.style.left = Math.random() * window.innerWidth + "px";
+      triangle.style.top = "-100px";
+      fallingTriangles.appendChild(triangle);
+    }, 500);
+
+    setInterval(function() {
+      let triangles = document.getElementsByClassName("triangle");
+      for (let i = 0; i < triangles.length; i++) {
+        let triangle = triangles[i];
+        let x1 = triangle.offsetLeft;
+        let y1 = triangle.offsetTop;
+        let x2 = cursorSquare.offsetLeft;
+        let y2 = cursorSquare.offsetTop;
+        let distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        triangle.style.top = triangle.offsetTop + 1 + "px";
+      }
+    }, 10);   
+}
+    </script>
+  </body>
+</html>
