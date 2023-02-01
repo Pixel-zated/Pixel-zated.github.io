@@ -11,6 +11,7 @@
 window.addEventListener("load", function() {
   // code to execute on page load
   document.body.style.overflow = "hidden";
+  document.body.requestPointerLock();
 });
 
 </script>
@@ -18,6 +19,17 @@ window.addEventListener("load", function() {
 <script>
 let running = true;
 let intervalId;
+let easterEgg = false
+let sussy = document.getElementById("sussy");
+
+setInterval(function(){if(time==69){
+  // show element
+  document.getElementById("sussy").classList.remove("hidden");
+} 
+  else {
+    //hide element
+    document.getElementById("sussy").classList.add("hidden");
+}},10);
 
 intervalId = setInterval(function() {
   if (running) {
@@ -53,18 +65,18 @@ var timer;
 document.addEventListener("wheel", function(event) {
   event.preventDefault();
 });
-  }
+}
 
 </script>
 
 <html>
-  <head><link rel="icon" type="image/png" href="/favicon.png">
+  <head><title>Escape the Triangles! v1.1</title><link rel="icon" type="image/png" href="/favicon.png">
     <style>
       selector { cursor: none; }
 
       ::-webkit-scrollbar {
     width: 0;
-    background-color: #F5F5F5;
+    background-color: #000000;
 }
 
     body {
@@ -77,7 +89,9 @@ document.addEventListener("wheel", function(event) {
       font-size: 100px;
       top: 0;
       left: 100;
-      color: white;
+      color: rgba(255, 255, 255, 0.484);
+      font-family:Cabin, sans-serif;
+      z-index: 998;
     }
     #cursor-square {
       position: absolute;
@@ -91,13 +105,35 @@ document.addEventListener("wheel", function(event) {
       height: 50%;
     }
     .triangle {
-      position: absolute;
-      width: 0;
-      height: 0;
-      border-left: 50px solid transparent;
-      border-right: 50px solid transparent;
-      border-bottom: 100px solid red;
-    }
+  position: absolute;
+  width: 100px; /* adjust width as needed */
+  height: 100px; /* adjust height as needed */
+  background-image: url(https://i.ibb.co/410270j/Triangle-1.png);
+  background-size: cover;
+}
+    .version {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        color: rgba(255, 255, 255, 0.5);
+        font-family: 'Cabin', sans-serif;
+        z-index: 999;
+      }
+
+    .sussy {
+  position: absolute;
+  top: 70px;
+  left: 450px;
+  font-size: 400px;
+  color: rgba(255, 255, 255, 0.5);
+  z-index: -1;
+}
+
+.hidden {
+  display: none;
+}
+
+
   </style>
     
     <script>
@@ -132,10 +168,13 @@ function clearTriangles() {
     }
 }
 
+
 </script>
     
   </head>
   <body>
+    <div id="sussy" class="sussy hidden">ඞ</div>
+    <div class="version">v1.1</div>
     <div id="timer"></div>
     <div id="cursor-square"></div>
     <div id="falling-triangles"></div>
@@ -197,14 +236,14 @@ document.addEventListener("mousemove", (event) => {
     movementY = event.movementY;
 });
 setInterval(updateCursorSquare, 10);
+setInterval(checkCollision, 10);
 
-    setInterval(checkCollision, 10);
 
 setInterval(function() {
   let triangles = document.getElementsByClassName("triangle");
   for (let i = 0; i < triangles.length; i++) {
     let triangle = triangles[i];
-    triangle.style.top = triangle.offsetTop + 1 + "px";
+    triangle.style.top = triangle.offsetTop + 3 + "px";
 
     // Check if the triangle is no longer visible
     if (triangle.offsetTop > window.innerHeight) {
@@ -213,28 +252,15 @@ setInterval(function() {
   }
 }, 10);
 
-if (running) {
+
     setInterval(function() {
       let triangle = document.createElement("div");
       triangle.classList.add("triangle");
       triangle.style.left = Math.random() * window.innerWidth + "px";
       triangle.style.top = "-100px";
       fallingTriangles.appendChild(triangle);
-    }, 500);
+    }, 600);
 
-    setInterval(function() {
-      let triangles = document.getElementsByClassName("triangle");
-      for (let i = 0; i < triangles.length; i++) {
-        let triangle = triangles[i];
-        let x1 = triangle.offsetLeft;
-        let y1 = triangle.offsetTop;
-        let x2 = cursorSquare.offsetLeft;
-        let y2 = cursorSquare.offsetTop;
-        let distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-        triangle.style.top = triangle.offsetTop + 1 + "px";
-      }
-    }, 10);   
-}
     </script>
   </body>
 </html>
