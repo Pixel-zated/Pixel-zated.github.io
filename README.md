@@ -5,4 +5,4 @@ This is my first time coding in Javascript, and I think it turned out well. I us
 
 
 Want to play it? Look in the releases tab, or go to:
-https://www.pixel-zated.github.io
+https://pixel-zated.github.io
